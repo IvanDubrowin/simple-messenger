@@ -14,6 +14,8 @@ tortoise-orm = "*"
 asyncpg = "*"
 uvicorn = "*"
 uvloop = "*"
+aiofiles = "*"
+ujson = "*"
 
 [requires]
 python_version = "3.8"
