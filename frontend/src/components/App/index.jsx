@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from  "clsx";
 import { createMuiTheme, ThemeProvider, makeStyles } from "@material-ui/core/styles";
+import DialogsList from "../DialogsList";
 
 const theme = createMuiTheme({});
 
@@ -45,7 +46,9 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <div className={classes.messenger}>
-                <div className={clsx(classes.scrollable, classes.sidebar)}></div>
+                <div className={clsx(classes.scrollable, classes.sidebar)}>
+                    <DialogsList/>
+                </div>
                 <div className={clsx(classes.scrollable, classes.content)}></div>
             </div>
         </ThemeProvider>

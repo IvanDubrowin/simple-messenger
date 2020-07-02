@@ -38,10 +38,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Toolbar = (props) => {
+const Toolbar = ({ title, leftItems, rightItems }) => {
 
-    const { title, leftItems, rightItems } = props;
-    
     const classes = useStyles();
 
     return(

@@ -31,7 +31,7 @@ const DialogsSearch = () => {
             <input
                 type="search"
                 className={classes.searchInput}
-                placeholder="Search Messages"
+                placeholder="Поиск сообщений"
             />
         </div>
     )
