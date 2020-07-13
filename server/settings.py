@@ -6,6 +6,9 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     title: str = 'Simple messenger'
     debug: bool = True
+    secret_key: str = 'secret'
+    jwt_lifetime: int = 3600
+    db_url: str = 'sqlite://:memory:'
 
     @property
     def reload(self) -> bool:
