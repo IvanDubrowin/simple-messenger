@@ -1,32 +1,10 @@
 from fastapi import FastAPI
 from fastapi.responses import UJSONResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi_users import FastAPIUsers
-from fastapi_users.authentication import JWTAuthentication
-from fastapi_users.db import TortoiseUserDatabase
 from tortoise.contrib.fastapi import register_tortoise
 
-from server.endpoints import base
-from server.models import User
-from server.serializers.users import UserCreateSerializer, UserDBSerializer, UserSerializer, UserUpdateSerializer
-from server.settings import Settings
-
-settings = Settings()
-
-jwt_authentication = JWTAuthentication(
-    secret=settings.secret_key,
-    lifetime_seconds=settings.jwt_lifetime,
-    tokenUrl='/auth/jwt/login'
-)
-user_db = TortoiseUserDatabase(UserDBSerializer, User)
-fastapi_users = FastAPIUsers(
-    user_db,
-    [jwt_authentication],
-    UserSerializer,
-    UserCreateSerializer,
-    UserUpdateSerializer,
-    UserDBSerializer,
-)
+from server.routes import setup_routes
+from server.settings import settings
 
 app = FastAPI(
     title=settings.title,
@@ -40,28 +18,7 @@ register_tortoise(
     generate_schemas=True,
     add_exception_handlers=True,
 )
-app.include_router(
-    fastapi_users.get_auth_router(jwt_authentication),
-    prefix='/auth/jwt',
-    tags=["auth"]
-)
-app.include_router(
-    fastapi_users.get_register_router(),
-    prefix="/auth",
-    tags=["auth"]
-)
-app.include_router(
-    fastapi_users.get_reset_password_router(settings.secret_key),
-    prefix="/auth",
-    tags=["auth"],
-)
-app.include_router(
-    fastapi_users.get_users_router(),
-    prefix="/users",
-    tags=["users"]
-)
-app.include_router(base.router)
-
+setup_routes(app)
 
 if settings.debug:
     app.mount(

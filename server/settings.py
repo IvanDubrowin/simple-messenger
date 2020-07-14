@@ -23,3 +23,6 @@ class Settings(BaseSettings):
     @property
     def static_root(self) -> str:
         return os.path.join(self.base_dir, 'static')
+
+
+settings = Settings()

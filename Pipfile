@@ -16,7 +16,7 @@ uvicorn = "*"
 uvloop = "*"
 aiofiles = "*"
 ujson = "*"
-fastapi-users = {extras = ["tortoise-orm"],version = "*"}
+fastapi-users = {extras = ["oauth", "tortoise-orm"],version = "*"}
 
 [requires]
 python_version = "3.8"
