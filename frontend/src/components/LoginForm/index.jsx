@@ -1,14 +1,22 @@
 import React, { useState } from "react";
+import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import axios from "axios";
-import {makeStyles} from "@material-ui/core/styles";
-import { Button, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, TextField, Typography } from "@material-ui/core";
 import { loginEndpoint } from "../../constants/api";
 import { login } from "../../utils/auth";
+import {showErrorMessage} from "../../redux/reducers/info";
 
 const useStyles = makeStyles(theme => ({
+    formContainer: {
+        display: 'flex',
+        minHeight: 'calc(100vh - 245px)',
+        justifyContent: 'center',
+        marginTop: '80px',
+    },
     loginForm: {
         backgroundColor: theme.palette.background.paper,
-        padding: theme.spacing(2, 4, 3),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -22,9 +30,10 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const Login = () => {
+const LoginForm = () => {
+    const history = useHistory();
     const classes = useStyles();
-
+    const dispatch = useDispatch();
     const [credentials, setCredentials] = useState({email: '', password: ''});
 
     const handleChange = event => {
@@ -44,19 +53,31 @@ const Login = () => {
             .post(
                 loginEndpoint,
                 formData,
-                {headers: {'Content-Type': 'multipart/form-data'}})
-            .then(response => login(response.data))
-            .catch(error => console.log(error.response.data))
+                {headers: {"Content-Type": "multipart/form-data"}})
+            .then(response => {
+                login(response.data);
+                history.push("/");
+            })
+            .catch(() => dispatch(showErrorMessage("Неверные учетные данные")))
     }
     return (
+        <div className={classes.formContainer}>
             <form className={classes.loginForm}>
+                <Typography variant="h5">
+                    Вход
+                </Typography>
                 <TextField name="email"
                            value={credentials.email}
                            onChange={handleChange}
+                           label="Email"
+                           variant="outlined"
                 />
                 <TextField name="password"
+                           type="password"
                            value={credentials.password}
                            onChange={handleChange}
+                           label="Password"
+                           variant="outlined"
                 />
                 <Button onClick={handleSubmit}
                         variant="outlined"
@@ -65,7 +86,8 @@ const Login = () => {
                             Login
                 </Button>
             </form>
+         </div>
         )
 }
 
-export default Login;
+export default LoginForm;
