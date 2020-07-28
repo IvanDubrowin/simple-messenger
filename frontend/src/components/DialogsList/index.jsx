@@ -1,14 +1,22 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import { IconButton } from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
 import DialogsSearch from "../DialogsSearch";
 import DialogsItem from "../DialogsItem";
-import Toolbar from "../Toolbar";
 
 const useStyles = makeStyles(theme => ({
     dialogs: {
         display: 'flex',
         flexDirection: 'column'
+    },
+    button: {
+        display: 'inline-block'
+    },
+    search: {
+        display: 'inline-block',
+        width: '85%'
     }
 }));
 
@@ -40,11 +48,19 @@ const DialogsList = () => {
 
     return (
         <div className={classes.dialogs}>
-            <Toolbar title='Messenger' leftItems={[]} rightItems={[]}/>
-            <DialogsSearch/>
+            <div>
+                <div className={classes.button}>
+                    <IconButton>
+                        <MenuIcon />
+                    </IconButton>
+                </div>
+                <div className={classes.search}>
+                    <DialogsSearch />
+                </div>
+            </div>
             {
                 dialogs.map(
-                    dialog => <DialogsItem key={dialog.name} data={dialog}/>
+                    dialog => <DialogsItem key={dialog.name} data={dialog} />
                 )
             }
         </div>

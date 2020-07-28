@@ -38,7 +38,7 @@ const LoginForm = () => {
 
     const handleChange = event => {
         setCredentials({...credentials, [event.target.name]:  event.target.value})
-    };
+    }
 
     const handleSubmit = event => {
         if (event) {
@@ -64,7 +64,7 @@ const LoginForm = () => {
         <div className={classes.formContainer}>
             <form className={classes.loginForm}>
                 <Typography variant="h5">
-                    Вход
+                    Login
                 </Typography>
                 <TextField name="email"
                            value={credentials.email}

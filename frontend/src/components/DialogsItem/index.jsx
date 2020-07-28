@@ -1,5 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+
 
 const useStyles = makeStyles(theme => ({
     dialogsItem: {
@@ -41,8 +43,8 @@ const DialogsItem = (props) => {
         <div className={classes.dialogsItem}>
             <img className={classes.dialogsPhoto} src={photo} alt='dialog'/>
             <div>
-                <h1 className={classes.dialogsTitle}>{name}</h1>
-                <p className={classes.dialogsSnippet}>{text}</p>
+                <Typography variant="h1" className={classes.dialogsTitle}>{name}</Typography>
+                <Typography className={classes.dialogsSnippet}>{text}</Typography>
             </div>
         </div>
     )
